@@ -22,6 +22,10 @@ app.use("/api/users", userRouter);
 app.use("/api/transactions", transactionRouter);
 app.use("/api/ihsg", ihsgRouter);
 
+app.get("/", (_req, res) => {
+  res.json({ status: "ok", message: "MyStocks API is running" });
+});
+
 // Global error handler
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err.message);
