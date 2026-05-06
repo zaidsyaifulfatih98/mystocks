@@ -64,24 +64,4 @@ export const userController = {
     }
   },
 
-  async getPostsByUserId(req: Request, res: Response, next: NextFunction) {
-    try {
-      const id = req.params.id as string;
-
-      if (!isCUID(id)) {
-        res.status(400).json({ success: false, message: "invalid id" });
-        return;
-      }
-
-      const posts = await userService.getPostsByUserId(id);
-
-      res.status(200).json({
-        success: true,
-        message: "get user posts successfully",
-        data: posts,
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
 };

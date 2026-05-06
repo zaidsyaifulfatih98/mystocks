@@ -21,11 +21,4 @@ export const userService = {
       select: { id: true, name: true, email: true, createdAt: true },
     });
   },
-
-  async getPostsByUserId(id: string) {
-    return await prisma.post.findMany({
-      where: { authorId: id },
-      include: { author: true },
-    });
-  },
 };

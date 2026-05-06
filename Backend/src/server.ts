@@ -1,22 +1,26 @@
 import express from "express";
+import cookieParser from "cookie-parser";
 import authRouter from "./routers/auth.router";
 import userRouter from "./routers/user.router";
-import postRouter from "./routers/post.router";
+import transactionRouter from "./routers/transaction.router";
+import ihsgRouter from "./routers/ihsg.router";
 import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:5173", // blog web
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-}))
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
-app.use("/api/posts", postRouter);
+app.use("/api/transactions", transactionRouter);
+app.use("/api/ihsg", ihsgRouter);
 
 // Global error handler
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
