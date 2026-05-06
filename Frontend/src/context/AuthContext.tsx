@@ -30,6 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     const res = await api.post("/auth/login", { email, password });
+    const token = res.data.data.token;
+    if (token) localStorage.setItem("token", token);
     setUser(res.data.data.user);
   };
 
@@ -39,6 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     await api.post("/auth/logout");
+    localStorage.removeItem("token");
     setUser(null);
   };
 
